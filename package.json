@@ -1,7 +1,7 @@
 {
-  "name": "subgraph-template-javascript-apollo-server",
-  "description": "A boilerplate template for Apollo Server with javascript",
-  "version": "0.0.0",
+  "name": "Phishlink",
+  "description": "A GraphQL API for Google Safe Browsing REST API",
+  "version": "1.0.0",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -22,9 +22,12 @@
   },
   "dependencies": {
     "@apollo/server": "^4.0.0",
+    "@apollo/datasource-rest": "^6.2.2",
     "@apollo/subgraph": "^2.3.1",
     "graphql": "latest",
-    "graphql-tag": "latest"
+    "graphql-tag": "latest",
+    "npm": "^10.2.1",
+    "start": "^5.1.0"
   },
   "devDependencies": {
     "jest": "29.7.0",

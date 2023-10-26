@@ -5,6 +5,7 @@ const { buildSubgraphSchema } = require("@apollo/subgraph");
 const { startStandaloneServer } = require("@apollo/server/standalone");
 const { GraphQLError } = require("graphql");
 const resolvers = require("./resolvers");
+const ThreatAPI = require("./datasources/threat-api");
 
 const port = process.env.PORT ?? 4001;
 const subgraphName = require("../package.json").name;
@@ -32,6 +33,12 @@ async function main() {
           },
         });
       }
+      const { cache } = server;
+      return {
+        dataSources: {
+          threatAPI: new ThreatAPI({ cache }),
+        },
+      };
     },
     listen: {
       port,

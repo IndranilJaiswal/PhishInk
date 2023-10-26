@@ -24,19 +24,83 @@ extend schema
   )
 
 type Query {
-  thing(id: ID!): Thing
+  _dummy: String
 }
 
-type Mutation {
-  createThing(thing: CreateThing!): Thing
-}
+  type Mutation {
+    "Mutate threats array"
+    ThreatData(url: String!, clientId: String!, clientVersion: String!, threatTypes: [String!], platformTypes: [String!], threatEntryTypes: [String!]): ThreatDataResponse
+  }
+   
+  type ThreatDataResponse {
+    "Similar to HTTP status code, represents the status of the mutation"
+    code: Int!
+    "Indicates whether the mutation was successful"
+    success: Boolean!
+    "Human-readable message for the UI"
+    message: String!
+    "The threat list matches."
+    matches: [Matches]
+  }
 
-type Thing @key(fields: "id") {
-  id: ID!
-  name: String
-}
+  type Matches {
+    "The threat type matching this threat."
+    threatType: ThreatType
+    "The platform type matching this threat."
+    platformType: PlatformType
+    "The threat matching this threat."
+    threat: Threat
+    "The cache lifetime for the returned match"
+    cacheDuration: String
+    "The threat entry type matching this threat."
+    threatEntryType: ThreatEntryType
+  }
 
-input CreateThing {
-  id: ID!
-  name: String
-}
+  type Threat {
+    "URL String of Threat Entry"
+    url: String
+  }
+
+   enum ThreatType {
+    "Unknown."
+    THREAT_TYPE_UNSPECIFIED
+    "Malware threat type."
+    MALWARE
+    "Social engineering threat type."
+    SOCIAL_ENGINEERING
+    "Unwanted software threat type."
+    UNWANTED_SOFTWARE
+    "Potentially harmful application threat type."
+    POTENTIALLY_HARMFUL_APPLICATION
+   }
+
+   enum PlatformType {
+    "Unknown platform."
+    PLATFORM_TYPE_UNSPECIFIED
+    "Threat posed to Windows."
+    WINDOWS
+    "Threat posed to Linux."
+    LINUX
+    "Threat posed to Android."
+    ANDROID
+    "Threat posed to OS X."
+    OSX
+    "Threat posed to iOS."
+    IOS
+    "Threat posed to at least one of the defined platforms."
+    ANY_PLATFORM
+    "Threat posed to all defined platforms."
+    ALL_PLATFORMS
+    "Threat posed to Chrome."
+    CHROME
+   }
+
+   enum ThreatEntryType {
+    "Unspecified."
+    THREAT_ENTRY_TYPE_UNSPECIFIED
+    "	A URL."
+    URL
+    "An executable program."
+    EXECUTABLE
+   }
+
